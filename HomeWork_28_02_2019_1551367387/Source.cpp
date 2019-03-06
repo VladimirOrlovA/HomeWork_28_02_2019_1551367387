@@ -2,6 +2,7 @@
 #include<locale.h>
 #include<time.h>
 #include<Windows.h>
+#include<cstring>			// библиотека работы со строкам
 
 
 using namespace std;
@@ -25,10 +26,26 @@ void Task1()
 	cout << "\n--------------------------------------------------------------------------\n\nTask1\n\n";
 	SetConsoleTextAttribute(hConsole, 7);
 
-	char Mas[250];
-	cin.getline(Mas, 250);
-	cout << Mas;
+	char Mas[250]="Hello. It's (wonderful), world@`";  // 28 символов, 3 пробела, 1 точка, 1 запятая
 
+	char *ptrMas = Mas;
+
+	/*cin.ignore();
+	cin.getline(Mas, 250);*/
+
+	cout << Mas<<endl;
+
+	int count = 0;
+
+	while (*ptrMas++ != '\0')
+	{
+		if (*ptrMas >=32 && *ptrMas <= 47 || *ptrMas >= 58 && *ptrMas <= 64 || *ptrMas >= 91 && *ptrMas <= 96 || *ptrMas >= 123 && *ptrMas <= 127)
+			count++;
+	}
+
+	cout<<strlen(Mas)<<endl;
+
+	cout << count<<endl;
 
 }
 
