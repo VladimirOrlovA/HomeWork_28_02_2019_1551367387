@@ -26,26 +26,41 @@ void Task1()
 	cout << "\n--------------------------------------------------------------------------\n\nTask1\n\n";
 	SetConsoleTextAttribute(hConsole, 7);
 
-	char Mas[250]="Hello. It's (wonderful), world@`";  // 28 символов, 3 пробела, 1 точка, 1 запятая
+	char Mas[250]; // = "Hello. It's wonderful, peace!";  // 28 символов, 3 пробела, 1 точка, 1 запятая
 
 	char *ptrMas = Mas;
 
-	/*cin.ignore();
-	cin.getline(Mas, 250);*/
+	cin.ignore();
+	cin.getline(Mas, 250);
 
-	cout << Mas<<endl;
+	//cout << Mas<<endl;
 
-	int count = 0;
+	int cCh = 0;
+	int cSpace = 1;
+	float averageWordLength = 0;
 
 	while (*ptrMas++ != '\0')
 	{
-		if (*ptrMas >=32 && *ptrMas <= 47 || *ptrMas >= 58 && *ptrMas <= 64 || *ptrMas >= 91 && *ptrMas <= 96 || *ptrMas >= 123 && *ptrMas <= 127)
-			count++;
+		// Считаем все символы кроме букв
+
+		if (*ptrMas >= 33 && *ptrMas <= 47 || *ptrMas >= 58 && *ptrMas <= 64 || *ptrMas >= 91 && *ptrMas <= 96 || *ptrMas >= 123 && *ptrMas <= 127)
+			cCh++;
+
+		// Считаем все пробелы, чтобы узнать сколько у нас слов в введеной строке 
+
+		else if (*ptrMas == 32)
+			cSpace++;
 	}
 
-	cout<<strlen(Mas)<<endl;
+	// Определяем среднюю длину слова в введенном предложении-строке
 
-	cout << count<<endl;
+	averageWordLength = float(strlen(Mas) - cCh - cSpace + 1) / cSpace;
+
+	cout << endl;
+	cout << "Кол-во символов в строке \t-> " << strlen(Mas) << endl;
+	cout << "Кол-во символов, не букв \t-> " << cCh + cSpace - 1 << endl;
+	cout << "Кол-во слов в строке     \t-> " << cSpace << endl;
+	cout << "Средняя длина слова в строке \t-> " << averageWordLength << endl;
 
 }
 
