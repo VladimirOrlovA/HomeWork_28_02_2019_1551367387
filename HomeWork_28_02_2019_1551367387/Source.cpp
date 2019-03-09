@@ -9,7 +9,209 @@ using namespace std;
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
+int strToInt(char *str)
+{
+	int number = 0;
+	int i = 0;
 
+	do
+	{
+		if (*str >= 48 && *str <= 57)  // считаем кол-во чисел, тем самым определяя разрядность числа
+			i++;
+
+		else if (i == 0)
+		{
+			return 0;	// если первый символ в строке не цифра возвращаем 0
+			break;
+		}
+
+
+	} while (*str++ >= 48 && *str <= 57); // идем по строке пока не закончатся цифры
+
+	str -= i;	 // возвращаем строку в начало
+
+	do
+	{
+		i--;
+		number += ((*str++) - 48) * pow(10, i); // собираем полученные цифры из строки в число
+
+	} while (i > 0);
+
+	return number;
+}
+
+void changeVowelsToAlpha(char const *str, char *nstr)
+{
+	// Alphabetical number(Aa - 1)  (Ee - 5)  (Ii - 9)  (Oo - 15)  (Uu - 21)  (Yy - 25)
+	
+	for (int i = 0; i<strlen(str); i++)
+	{
+		if (str[i] == 'A' || str[i] == 'a')			// (Aa - 1) 
+		{
+		nstr[i] = '0';
+		nstr[i + 1] = '1';
+		nstr++;
+		i++;
+		}
+
+		else if (str[i] == 'E' || str[i] == 'e')	// (Ee - 5)
+		{
+			nstr[i] = '0';
+			nstr[i + 1] = '5';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'I' || str[i] == 'i')	// (Ii - 9)
+		{
+			nstr[i] = '0';
+			nstr[i+1] = '9';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'O' || str[i] == 'o')	// (Oo - 15)
+		{
+			nstr[i] = '1';
+			nstr[i + 1] = '5';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'U' || str[i] == 'u')	// (Uu - 21))
+		{
+			nstr[i] = '2';
+			nstr[i + 1] = '1';
+			nstr++;
+			i++;
+		}
+		
+		else if (str[i] == 'Y' || str[i] == 'y')	// (Uu - 21))
+		{
+			nstr[i] = '2';
+			nstr[i + 1] = '5';
+			nstr++;
+			i++;
+		}
+
+		nstr[i] = str[i];
+	}
+
+}
+
+
+void changeVowelsToASCII(char const *str, char *nstr)
+{
+	// ASCII number (Aa 65-97)  (Ee 69-101)  (Ii 73-105)  (Oo 79-111)  (Uu 85-117)  (Yy 89-121)
+
+	for (int i = 0; i < strlen(str); i++)
+	{
+		if (str[i] == 'A')		// Aa - 65-97=32  
+		{
+			nstr[i] = '6';
+			nstr[i + 1] = '5';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'a')
+		{
+			nstr[i] = '9';
+			nstr[i + 1] = '7';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'E')	// Ee 69-101=32
+		{
+			nstr[i] = '6';
+			nstr[i + 1] = '9';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'e')
+		{
+			nstr[i] = '1';
+			nstr[i + 1] = '0';
+			nstr[i + 2] = '1';
+			nstr += 2;
+			i++;
+		}
+
+		else if (str[i] == 'I')	// Ii 73-105=32
+		{
+			nstr[i] = '7';
+			nstr[i + 1] = '3';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'i')
+		{
+			nstr[i] = '1';
+			nstr[i + 1] = '0';
+			nstr[i + 2] = '5';
+			nstr += 2;
+			i++;
+		}
+
+		else if (str[i] == 'O')	// Oo 79-111=32
+		{
+			nstr[i] = '7';
+			nstr[i + 1] = '9';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'o')
+		{
+			nstr[i] = '1';
+			nstr[i + 1] = '1';
+			nstr[i + 2] = '1';
+			nstr += 2;
+			i++;
+		}
+
+		else if (str[i] == 'U')	// Uu 85-117=32
+		{
+			nstr[i] = '8';
+			nstr[i + 1] = '5';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'u')
+		{
+			nstr[i] = '1';
+			nstr[i + 1] = '1';
+			nstr[i + 2] = '7';
+			nstr += 2;
+			i++;
+		}
+
+		else if (str[i] == 'Y')	// Yy 89-121=32
+		{
+			nstr[i] = '8';
+			nstr[i + 1] = '9';
+			nstr++;
+			i++;
+		}
+
+		else if (str[i] == 'y')
+		{
+			nstr[i] = '1';
+			nstr[i + 1] = '2';
+			nstr[i + 2] = '1';
+			nstr += 2;
+			i++;
+		}
+
+		nstr[i] = str[i];
+	}
+
+
+}
 
 void Task1()
 {
@@ -64,38 +266,6 @@ void Task1()
 
 }
 
-int strToInt(char *str)
-{
-	int number = 0;
-	int i = 0;
-
-	do
-	{
-		if (*str >= 48 && *str <= 57)  // считаем кол-во чисел, тем самым определяя разрядность числа
-			i++;
-
-		else if (i == 0)
-		{
-			return 0;	// если первый символ в строке не цифра возвращаем 0
-			break;
-		}
-	
-
-	} while (*str++ >= 48 && *str <= 57); // идем по строке пока не закончатся цифры
-
-	str-=i;	 // возвращаем строку в начало
-
-	do
-	{
-		i--;
-		number += ((*str++)- 48) * pow(10, i); // собираем полученные цифры из строки в число
-		
-	}while (i > 0);
-
-	return number;
-}
-
-
 void Task2()
 {
 	/* 2.	**Написать функцию, которая преобразует строку в целое число. Если строка содержит не цифровые
@@ -117,8 +287,6 @@ void Task2()
 	cout<<strToInt(str);
 
 }
-	
-
 
 void Task3()
 {
@@ -130,6 +298,18 @@ void Task3()
 	cout << "\n--------------------------------------------------------------------------\n\nTask3\n\n";
 	SetConsoleTextAttribute(hConsole, 7);
 
+	// В этом приедолжении мы ищем все гласные буквы и меняем их на номер по алфафиту
+
+	char str[100] = "This is unit a red color, is ok";
+	char nstr[100]="0";
+		
+	cout << str << endl;
+
+	changeVowelsToAlpha(str, nstr);
+	cout << endl << nstr << endl;
+
+	changeVowelsToASCII(str, nstr);
+	cout << endl << nstr << endl;
 
 
 }
